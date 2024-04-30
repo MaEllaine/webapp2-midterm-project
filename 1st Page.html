@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1st page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src=”https://cdn.tailwindcss.com”></script>
+</head>
+
+<style>
+    body{
+        font-family: "Special Elite", system-ui;
+
+    }
+
+    input[type="text"], input[type="password"] {
+        margin-bottom: 10px;
+        font-size: medium;
+        font-style: italic;
+        max-width: 500px;
+        padding: 10px;
+        font-family: "Special Elite", system-ui;
+    }
+
+    #form{
+
+        padding-bottom: 10px;
+        padding-left: 40px;
+    }
+
+    .div-container{ 
+        width: 300px;
+        height: 400px;
+        background-image: linear-gradient(to left, rgba(183, 147, 74, 0), rgb(229, 226, 214));
+      
+    }
+
+    .whole{
+        padding-left: 600px;
+        padding-top: 100px;
+        display: float;
+    }
+    
+    h1{
+        padding-top: 50px;
+        padding-left: 60px;
+        font-size: 50px;
+        text-shadow: 2px 2px #756b6b;
+    }
+
+    .back-video{
+        left: 0;
+        top: 0;
+        position: absolute;   
+        z-index: -1;
+    }
+
+@media(min-aspect-ratio: 16/9) {
+    .back-video{
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media(max-aspect-ratio: 16/9) {
+    .back-video{
+        width: auto;
+        height: 100%;
+    }
+}
+
+#submit{
+    font-family: "Special Elite", system-ui;
+    font-size: medium;
+    padding: 10px;
+
+    color: #101010;
+    padding: 8px 22px;
+    border-radius: 6px;
+    background: rgb(230, 228, 225);
+    transition: all 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.96)
+}
+
+</style>
+
+<body>
+    <div class="whole">
+        <video autoplay loop muted plays-inline class="back-video">
+            <source src="1stPage - Made with Clipchamp.mp4" type="video/mp4">
+        </video>
+        <div class="div-container">  
+            <h1>LogIn</h1>
+            <form id="form">
+                <input type="text" id="username" placeholder="Enter your username..." required><br>
+                <input type="password" id="password" placeholder="Enter your password..." required><br>
+                <button id="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.getElementById("form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const user_name = document.getElementById("username").value;
+        const pass_word = document.getElementById("password").value;
+
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(response => response.json())
+            .then(users => {
+                const user = users.find(user => user.username === user_name);
+
+                if(user) {
+                    if (pass_word === "anywhere01") {
+                        window.location.href = "2nd Page.html";
+                    } else {
+                        alert("Wrong password!");
+                    }
+                } else {
+                    alert("Not a user!");
+                }             
+            })
+            .catch(error => alert("Failure Fetching =", error));
+    });
+</script>
+</html>
